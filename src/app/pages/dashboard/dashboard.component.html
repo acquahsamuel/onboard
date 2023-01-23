@@ -1,0 +1,171 @@
+<div class="everything">
+  
+  <app-header (filterData)="filter($event)"></app-header>
+  <div style="height: 100%">
+    <div fxFlex="auto" fxFlex.md="auto">
+      <div class="inline-list">
+
+        <div class="menu-btns">
+          <button class="menu-item" mat-flat-button (click)="sideBarToggler()">
+            <mat-icon matTooltipPosition="after"> menu </mat-icon>
+          </button>
+
+          <div class="menu-item-group">
+            <button class="menu-item" mat-flat-button (click)="getDashboardData()">
+              <mat-icon> refresh </mat-icon>
+            </button>
+            
+          </div>
+        </div>
+
+        <div style="width: 100%">
+          <mat-paginator style="background-color: #f2f2f2" [pageSizeOptions]="[15, 30]"></mat-paginator>
+        </div>
+      </div>
+
+      <mat-drawer-container fxLayout="column" style="background-color: #ffffff" autosize>
+        <mat-drawer id="sidenav" mode="side" [class.menu-open]="sideBarOpen" [class.menu-close]="!sideBarOpen" [opened]="sideBarOpen">
+          <app-sidebar [list]="sideNav" (tableView)="view($event)"></app-sidebar>
+        </mat-drawer>
+
+
+        <mat-drawer-content style="background-color: white;">
+          <div class="main-view" [ngClass]="{ 'main-view-margin': !sideBarOpen }" style="height: 100% !important">
+            <div fxLayout="column">
+              <div [hidden]="!isData">
+
+                <table [hidden]="!isData" mat-table matTableExporter [dataSource]="dataSource" matSort>
+
+                  <!-- Checkbox Column -->
+                  <!-- <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                      </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"  [checked]="selection.isSelected(row)">
+                      </mat-checkbox>
+                    </td>
+                  </ng-container> -->
+
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      First name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.firstName | titlecase }}
+                    </td>
+                  </ng-container>
+
+
+
+                  <ng-container matColumnDef="otherNames">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Other name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.otherNames | titlecase }}
+                    </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="lastNames">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      LastNames
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.lastNames | titlecase }}
+                    </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="investmentType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Investment Type
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.investmentType | titlecase }}
+                    </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="submissionDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Date Submitted
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.submissionDate }}
+                    </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Time
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.time }}
+                    </td>
+                  </ng-container>
+
+
+
+
+
+                  <tr class="table-item" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns" style="cursor: pointer" class="table-row" (click)="goTo(row)"></tr>
+                </table>
+
+
+                <mat-menu hasBackdrop="false" class="info" #commentMenu="matMenu">
+                  <div class="menu-two" style="padding-left: 20px; padding-right: 20px">
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                      <p style="color: #ffc989">Comments</p>
+                    </div>
+                    <p style="color: #ffffff">
+                      {{ comment ? comment.toLowerCase() : "no comment" }}
+                    </p>
+                  </div>
+                </mat-menu>
+              </div>
+              <div [hidden]="isData">
+                <!-- <mat-icon *ngIf="errorMessage">cancel</mat-icon> -->
+
+                <div class="no-data-container">
+                  <div class="dashboard-empty">
+                    <div class="dashboard-empty-wrapper">
+                      <div class="image">
+                        <!-- <mat-icon style="width: 350px; height: 350px;;" [svgIcon]="iconService.generateIcon('empty-dashboardd')"></mat-icon> -->
+                        <mat-icon style="width: 350px; height: 350px;">
+                          <img matTooltip="" src="assets/icons/empty-dashboardd.svg" alt="" srcset="">
+                        </mat-icon>
+
+                      </div>
+                      <div class="content">
+                        <h4> Your dashboard is currently empty. </h4>
+                        <p> Any Record Created will show up here </p>
+                        <!-- <button mat-raised-button color="warm" [routerLink]="['/create/customer-details']" class="create-record">Create new Record </button> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+
+    <div style="padding-top: 50px" fxFlex="5" class="quick-actions" fxFlex.md="5">
+      <mat-list>
+      </mat-list>
+    </div>
+  </div>
+</div>
+

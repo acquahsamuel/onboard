@@ -1,0 +1,31 @@
+  .form-dialogue-reject {
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .form-control {
+    font-family: inherit;
+    font-size: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group .form-control {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}

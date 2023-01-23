@@ -1,0 +1,49 @@
+mat-icon {
+  color: #666;
+  margin-right: 20px;
+}
+mat-list-item {
+  background-color: #f2f2f2;
+  border-width: 0px;
+  cursor: pointer;
+}
+mat-list {
+  background-color: #f2f2f2;
+  height: 100%;
+}
+
+button {
+  font-weight: 400;
+  background-color: transparent;
+
+  display: flex;
+}
+.active {
+  color: #ffffff;
+  background: rgb(255, 94, 3);
+
+  .no-theme {
+    fill: inherit;
+  }
+}
+.is-active {
+ 
+  background: rgb(255, 94, 3);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 94, 3, 1) 35%,
+    rgba(255, 185, 79, 1) 100%
+  );
+
+  span {
+    color: white;
+  }
+  .no-theme {
+    fill: inherit;
+  }
+}
+#logo img {
+  max-width: 30px;
+  margin: 10px auto;
+}
+

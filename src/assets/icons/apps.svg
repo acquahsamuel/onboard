@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <defs>
+        <style>.cls-ww{fill:#fff;}</style>
+    </defs>
+    <title>ic_apps</title>
+    <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1-2" data-name="Layer 1">
+            <g id="ic_apps">
+                <path class="cls-ww" d="M0,4H4V0H0ZM6,16h4V12H6ZM0,16H4V12H0Zm0-6H4V6H0Zm6,0h4V6H6ZM12,0V4h4V0ZM6,4h4V0H6Zm6,6h4V6H12Zm0,6h4V12H12Z" />
+            </g>
+        </g>
+    </g>
+</svg>

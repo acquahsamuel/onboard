@@ -1,0 +1,25 @@
+<mat-list fxLayout="column" id="menus">
+  <div *ngFor="let item of list; let i = index">
+    <mat-list-item style="cursor: pointer" (click)="item.show=!item.show" [ngClass]="{ 'is-active': view == item.name }">
+      <button class="menu-item" mat-flat-button>
+        <mat-icon [ngClass]="{ 'active': view == item.name }" [matTooltip]="item.name" [svgIcon]="iconService.generateIcon(item.name)" matTooltipPosition="after">
+        </mat-icon>
+        <span> {{ item.name }}</span>
+        <mat-icon style="margin-left: 40px;">{{item.show?'expand_more':'expand_less'}}</mat-icon>
+      </button>
+
+    </mat-list-item>
+    <span *ngIf="item.children && item.show">
+      <div *ngFor="let child of item.children">
+        <mat-list-item (click)="show(child.name)" style="cursor: pointer;color : red !important" style="padding-left: 20px;" [ngClass]="{ 'is-active': view == child.name }">
+          <button class="menu-item" style="width: 150px;" mat-flat-button>
+            <mat-icon [ngClass]="{ 'active': view == child.name }" [matTooltip]="child.name" [svgIcon]="iconService.generateIcon(child.name)" matTooltipPosition="after">
+            </mat-icon>
+            <span style="width: 100px;"> {{ child.name }}</span>
+          </button>
+          <!-- <span style="margin-left: 15px; font-size: 12px;"> {{ child.count }}</span> -->
+        </mat-list-item>
+      </div>
+    </span>
+  </div>
+</mat-list>

@@ -1,0 +1,124 @@
+<div class="everything">
+  <app-header (filterData)="filter($event)"></app-header>
+  <div style="height: 100%">
+    <div fxFlex="auto" fxFlex.md="auto">
+      <div class="inline-list">
+        <div class="menu-btns">
+          <button class="menu-item" mat-flat-button (click)="sideBarToggler()">
+            <mat-icon matTooltipPosition="after"> menu </mat-icon>
+          </button>
+          <button class="menu-item" mat-flat-button (click)="view('All'); getDashboardData()">
+            <mat-icon> refresh </mat-icon>
+          </button>
+        </div>
+        <div style="width: 100%">
+          <mat-paginator style="background-color: #f2f2f2" [pageSizeOptions]="[50]"></mat-paginator>
+        </div>
+      </div>
+      <mat-drawer-container fxLayout="column" style="background-color: #ffffff" autosize>
+        <mat-drawer id="sidenav" mode="side" [class.menu-open]="sideBarOpen" [class.menu-close]="!sideBarOpen" [opened]="sideBarOpen">
+          <app-sidebar [list]="sideNav" view="All" (tableView)="view($event)"></app-sidebar>
+        </mat-drawer>
+        <mat-drawer-content style="background-color: white">
+          <div class="main-view" [ngClass]="{ 'main-view-margin': !sideBarOpen }" style="height: 100% !important">
+            <div fxLayout="column">
+              <div [hidden]="!isData">
+                <table style="margin-bottom: 200px;" [hidden]="!isData" mat-table matTableExporter [dataSource]="dataSource" matSort>
+                  <ng-container matColumnDef="firstname">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Full Name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.fullname | titlecase }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="acc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Account Number
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.acc  }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Status
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.status | titlecase }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="modifiedDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Date modified
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.requestDate | date : "dd MMMM yyyy" }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="comments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Comments
+                    </th>
+                    <td mat-cell *matCellDef="let element" (mouseenter)="
+                        linkMonitorTrigger.openMenu();
+                        changeComment(element.comments)
+                      " (mouseleave)="
+                        $event.stopPropagation(); linkMonitorTrigger.closeMenu()
+                      " #linkMonitorTrigger="matMenuTrigger" [matMenuTriggerFor]="commentMenu">
+                      <mat-icon>more_horiz</mat-icon>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="createdDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Created
+                    </th>
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{
+                        color: waitStatus[element.id] > 168 ? 'red' : 'green'
+                      }">
+                      {{ getRelativeTime(element.createdDate, element.id) }}
+                      {{ relatives[element.id] }}
+                    </td>
+                  </ng-container>
+
+                  <tr class="table-item" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns" style="cursor: pointer" class="table-row" (click)="goTo(row)"></tr>
+                </table>
+                <mat-menu hasBackdrop="false" class="info" #commentMenu="matMenu">
+                  <div class="menu-two" style="padding-left: 20px; padding-right: 20px">
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                      <p style="color: #ffc989">Comments</p>
+                    </div>
+                    <p style="color: #ffffff">
+                      {{ comment ? comment.toLowerCase() : "no comment" }}
+                    </p>
+                  </div>
+                </mat-menu>
+              </div>
+              <div [hidden]="isData">
+                <div class="no-data-container">
+                  <mat-icon *ngIf="errorMessage">cancel</mat-icon>
+                  <br />
+                  {{ errorMessage }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+    <div style="padding-top: 50px" fxFlex="5" class="quick-actions" fxFlex.md="5">
+      <mat-list>
+        <button [routerLink]="['details/search/0']" class="menu-item" mat-flat-button>
+          <mat-icon matTooltip="Search by CIF or Account Number" class="add-new-req-icon" [svgIcon]="iconService.generateIcon('search')">
+          </mat-icon>
+        </button>
+        <br>
+        <!-- <button (click)="excelDownload()" class="menu-item" mat-flat-button>
+          <mat-icon matTooltip="Download Excel file" class="add-new-req-icon" [svgIcon]="iconService.generateIcon('download')">
+          </mat-icon>
+        </button> -->
+      </mat-list>
+    </div>
+  </div>
+</div>

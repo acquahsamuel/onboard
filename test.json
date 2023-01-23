@@ -1,0 +1,193 @@
+
+{
+    "hostHeaderInfo": {
+        "sourceCode": "SIMSONBOARDING",
+        "requestId": "77779",
+        "countryCode": "GH",
+        "responseCode": "000",
+        "responseMessage": "SUCCESS"
+    },
+    "regRequestId": 2,
+    "cif": null,
+    "mobileNumber": "0244897996",
+    "preferredName": "Kwame",
+    "accountType": "Inidividual Investment1",
+    "clientProfile": {
+        "hostHeaderInfo": null,
+        "firstName": "George",
+        "surname": "Williams",
+        "otherNames": "Anthony",
+        "placeOfBirth": "MyHomeTown",
+        "mothersMaidenName": "Ama Kofi",
+        "residentialAddress": "OSU",
+        "gpsCode": "334453",
+        "primaryMobileNumber": "0244123456",
+        "secondaryMobileNumber": "0208123456",
+        "email": "kkk@mm@gmail.com",
+        "idNumber": "112223344",
+        "issueDate": "12Jan",
+        "expiryDate": "15Jan",
+        "residentialStatus": "Resident",
+        "countryOfOrigin": "Ghana",
+        "countryOfResidence": "Ghana",
+        "profession": "Software Dev",
+        "employmentStatus": "Employed",
+        "industry": "Banking",
+        "yearsOfEmployment": "40",
+        "yearsOfCurrentEmp": "1",
+        "yearsOfPreviousEmp": "39",
+        "totalMonthlyIncome": 70.54,
+        "employerName": "Ghana Employer",
+        "employerAddress": "Accra 12",
+        "employerContact": "0344455566",
+        "employerEmail": "employer@accra.com",
+        "employerCity": "Accra",
+        "natureOfBusiness": "Engineering",
+        "mobileNumber": null,
+        "title": "Mr",
+        "maritalStatus": "Single",
+        "gender": "Male",
+        "permitNumber": "223322",
+        "permitIssueDate": "12/12/2020",
+        "permitExpiryDate": "15Jan",
+        "permitPlaceOfIssue": "Accra"
+    },
+    "paymentDetails": {
+        "bankAccounts": [
+            {
+                "bankName": "Stanbic",
+                "branch": "Heights",
+                "bankAccountNumber": "11223344",
+                "accountName": "Bankye"
+            },
+            {
+                "bankName": "Stanbic",
+                "branch": "Heights",
+                "bankAccountNumber": "11223355",
+                "accountName": "Bankyewaa"
+            },
+            {
+                "bankName": null,
+                "branch": "0244897996",
+                "bankAccountNumber": "myType1",
+                "accountName": null
+            },
+            {
+                "bankName": null,
+                "branch": "0244897996",
+                "bankAccountNumber": "myType2",
+                "accountName": null
+            },
+            {
+                "bankName": null,
+                "branch": "0244897996",
+                "bankAccountNumber": "myType3",
+                "accountName": null
+            },
+            {
+                "bankName": null,
+                "branch": "0244897996",
+                "bankAccountNumber": "myType4",
+                "accountName": null
+            }
+        ],
+        "mobileMoneyWallets": [
+            {
+                "serviceProvider": "MTN",
+                "momoNumber": "0244123456",
+                "nameOnWallet": "Kwaku Bankye"
+            }
+        ]
+    },
+    "beneficiaries": [
+        {
+            "fullName": "Kwame Asare",
+            "relationship": "Father",
+            "contactNumber": "0244123456",
+            "percentage": 10.0
+        },
+        {
+            "fullName": "Ama Attah",
+            "relationship": "Mother",
+            "contactNumber": "0244123987",
+            "percentage": 90.0
+        }
+    ],
+    "investProfile": {
+        "riskTolerance": "Low",
+        "investmentHorizon": "High",
+        "investmentKnowledge": "Low"
+    },
+    "expAcctActActivity": {
+        "sourceOfFunds": "Account",
+        "topupActivity": "Daily",
+        "withdrawalActivity": "Monthly",
+        "anticipatedTopupAmount": "More than 1000",
+        "initialInvestmentAmount": 1200.0,
+        "cash": false,
+        "cheque": true,
+        "directDebit": false,
+        "directTransfer": false,
+        "mobileMoney": true,
+        "slydePay": true,
+        "standingOrder": true
+    },
+    "additionalInfo": {
+        "foreignCitizen": true,
+        "foreignPassport": false,
+        "foreignGreenCard": true,
+        "foreignResident": false,
+        "moreDaysInForeignCountry": false,
+        "onlineSIMSAccount": true,
+        "indemnityEmail": "mmmm@gmail.com",
+        "securityPurchase": true,
+
+        "foreignCitizenData": {
+            "foreignResidentialAddr": "test_ff269219ffc6",
+            "foreignMailingAddr": "test_c46bdc6d7e28",
+            "foreignTelephoneNumber": "test_f79e2b7e62c0",
+            "tin": "test_6b9edef916d6"
+        },
+
+        "foreignPassportData": {
+            "foreignResidentialAddr": "test_830f1b99bace",
+            "foreignMailingAddr": "test_6d3cdff42cbf",
+            "foreignTelephoneNumber": "test_3474b887e01b",
+            "tin": "test_82ab6274265a"
+        },
+        "foreignGreenCardData": {
+            "foreignResidentialAddr": "test_6c6ce7c0bd3e",
+            "foreignMailingAddr": "test_d561adc5af16",
+            "foreignTelephoneNumber": "test_9a0393f2988e",
+            "tin": "test_1aa81d347575"
+        },
+
+        
+        "foreignResidentData": {
+            "foreignResidentialAddr": "test_5561e2b68485",
+            "foreignMailingAddr": "test_931ddc2dd268",
+            "foreignTelephoneNumber": "test_4eba346252fd",
+            "tin": "test_0a47098ced64"
+        },
+        "moreDaysData": {
+            "foreignResidentialAddr": "test_7c0206081f89",
+            "foreignMailingAddr": "test_0e4dbf240291",
+            "foreignTelephoneNumber": "test_401d96ce21c5",
+            "tin": "test_ca0f31864b66"
+        }
+    },
+
+
+
+    
+    "consent": {
+        "otherProducts": true,
+        "research": true,
+        "offers": true,
+        "sharePersonalInfo": false
+    },
+    "files": null,
+    "status": "APPROVED",
+    "entryDate": "2022-10-06T17:36:02.147+0000",
+    "lastUpdate": "2022-10-06T17:39:35.415+0000"
+}

@@ -1,0 +1,46 @@
+// ::ng-deep.mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
+//   background-color: rgba(255, 228, 191, 0.65);
+// }
+.inputWithIcon input[type="text"] {
+  padding: 15px 30px 15px 70px;
+  background-color: #fff;
+  opacity: 0.8;
+  width: 600px !important;
+  border-radius: 6px !important;
+}
+.inputWithIcon {
+  position: relative;
+  margin-left: 8%;
+}
+.moby-apps-header {
+  font-size: 15px;
+}
+.search_icon {
+  position: absolute;
+  left: 0;
+  top: 15px;
+  margin-left: 20px;
+  // padding: 9px 8px;
+  color: #868686;
+  transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus + i {
+  color: #868686;
+}
+
+.inputWithIcon.inputIconBg i {
+  background-color: #aaa;
+  color: #fff;
+  padding: 9px 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="text"]:focus + i {
+  color: #fff;
+  background-color: #000000;
+}
+
+.apps-icon {
+  color: white;
+}

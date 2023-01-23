@@ -1,0 +1,12 @@
+<div class="backdrop" (click)="onClose()">
+    <div class="alert-box" [ngClass]="{'success': type, 'error': !type }">
+        <div class="alert-top">
+            <span *ngIf="type"><b>SUCCESS MESSAGE</b></span>
+            <span *ngIf="!type"><b>ERROR MESSAGE</b></span>
+            <button mat-button (click)="onClose()">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">clear</mat-icon>
+            </button>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</div>

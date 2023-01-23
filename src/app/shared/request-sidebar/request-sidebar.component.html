@@ -1,0 +1,10 @@
+<mat-list fxLayout="column" id="menus">
+  <div class="is-active">
+    <ng-content select="[accountDetails]"></ng-content>
+  </div>
+  <ng-content select="[contentFlow]"></ng-content>
+  <br />
+  <ng-content select="[emergency]"> </ng-content>
+</mat-list>
+
+

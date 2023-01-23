@@ -1,0 +1,28 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+    <img class="img-valign-header" [src]="assetPreLoader+'/assets/imgs/stanbic.png'" width="40" alt="" />
+    <span class="moby-apps-header">&nbsp; Stanbic Investment Management Services </span>
+
+    <div class="inputWithIcon">
+      <input (keyup)="applyFilter($event)" type="text" placeholder="Search">
+      <mat-icon class="search_icon" aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+
+      <ul fxLayout="row" fxLayoutGap="20px">
+        <button routerLink="/apps" class="apps-icon" mat-icon-button>
+          <mat-icon>apps</mat-icon>
+        </button>
+        <button class="initials-header" [matMenuTriggerFor]="menu" mat-mini-fab>{{initials}}</button>
+        <mat-menu #menu="matMenu">
+          <button (click)="logout()" mat-menu-item>
+            <span>LOGOUT</span>
+          </button>
+        </mat-menu>
+      </ul>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div *ngIf="loaderService.isLoading | async">
+  <mat-progress-bar mode="indeterminate" value="40" color="warn"></mat-progress-bar>
+</div>

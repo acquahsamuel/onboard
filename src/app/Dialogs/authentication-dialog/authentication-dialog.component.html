@@ -1,0 +1,22 @@
+<mat-progress-bar *ngIf="loading" color="warn" mode="query"></mat-progress-bar>
+<div mat-dialog-title>
+  <p class="dialog-heading">User Authentication Required</p>
+</div>
+
+<div mat-dialog-content>
+  <p class="dialog-delete-text">Session expired. Login to proceed </p>
+  <mat-form-field appearance="outline" class="form-fields">
+    <mat-label>SAP ID</mat-label>
+    <input name="username" [(ngModel)]="loginModel.username" matInput placeholder="SAP ID" readonly>
+    <mat-error><mat-icon>error</mat-icon> &nbsp;SAP ID is required</mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="outline" class="form-fields">
+    <mat-label>Password</mat-label>
+    <input  name="password" (keyup.enter)="login()"  [(ngModel)]="loginModel.password" matInput type="password" placeholder="Password">
+    <mat-error><mat-icon>error</mat-icon> &nbsp;Password is required</mat-error>
+  </mat-form-field>
+  <br>
+  <button (click)="login()" [disabled]="loginModel.password.length == 0" type="submit" class="login-btn" mat-raised-button>SIGN IN</button>
+
+</div>

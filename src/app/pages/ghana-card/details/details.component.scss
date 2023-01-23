@@ -1,0 +1,40 @@
+.everything {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.continue-btn {
+  background-color: #0089ff;
+}
+textarea {
+  padding: 10px;
+  min-width: 240px;
+  min-height: 150px;
+  font-family: "thin";
+  border-radius: 4px;
+  background-color: unset;
+}
+
+img {
+  // max-width: 250px;
+  // min-width: 250px;
+  max-height: 250px;
+  min-height: 250px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.25);
+}
+img:hover {
+  opacity: 0.7;
+}
+
+mat-drawer-content {
+  background-color: #ffffff;
+  overflow: auto;
+  height: 100%;
+  overflow-x: hidden;
+  padding-left: 20px;
+}

@@ -1,0 +1,45 @@
+
+
+<div fxFlex="60" fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60">
+  <h4> SIMS Onboarding </h4>
+  <div class="login-form">
+    <p class="login-heading">Welcome,</p>
+    <p class="login-heading">Sign in to get started</p>
+    <p class="login-subheading">Sign in to start</p>
+    <form [formGroup]="loginFormGroup" (submit)="login()">
+      <mat-form-field appearance="outline" [style.width.px]="327">
+        <mat-label>SAP ID</mat-label>
+        <input
+          name="username"
+          formControlName="username"
+          matInput
+          placeholder="SAP ID"
+        />
+        <mat-error><mat-icon>error</mat-icon> &nbsp;SAP ID is required</mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="outline" [style.width.px]="327">
+        <mat-label>Password</mat-label>
+        <input
+          name="password"
+          formControlName="password"
+          matInput
+          type="password"
+          placeholder="Password"
+        />
+        <mat-error
+          ><mat-icon>error</mat-icon> &nbsp;Password is required</mat-error
+        >
+     
+      </mat-form-field>
+      <br>
+       <div class="reset-link">
+        <span> <a routerLink=""> Reset Password </a> </span>
+      </div>
+      <br />
+      <button type="submit" class="login-btn" mat-raised-button> SIGN IN </button>
+    </form>
+  </div>
+</div>
+<div class="SLIDE_BG poster-div" fxFlex="40" fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40">
+</div>

@@ -1,0 +1,1406 @@
+<!-- <mat-progress-bar *ngIf="loading" color="accent" mode="query"></mat-progress-bar> -->
+<app-header></app-header>
+<mat-progress-bar *ngIf="loading" color="accent" mode="query"></mat-progress-bar>
+<div class="main-forms">
+    <mat-toolbar>
+        <div class="toolbar-content">
+            <button routerLink="/dashboard" mat-button class="toolbar-text">
+                <mat-icon class="toolbar-icon" aria-hidden="true">keyboard_arrow_left</mat-icon>
+                Dashboard
+            </button>
+
+            <div class="toolbar-progress-number">
+                {{completed}}% completed
+            </div>
+            <div class="toolbar-progress">
+                <mat-progress-bar class="toolbar-progress-bar" mode="determinate" [value]="completed">
+                </mat-progress-bar>
+            </div>
+
+            <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+                <!-- <button *ngIf="nav !== lastLabelIndex" mat-button class="toolbar-text">Save &amp; Exit</button>-->
+            </div>
+        </div>
+
+    </mat-toolbar>
+
+
+    <div class="main-view">
+        
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+            <div fxFlex="17" fxFlex.md="17" class="form-info" style="background-color:#eee; height:100vh">
+                <!-- <div *ngIf="isData" class="accounts-info">
+                  <p style="margin-left: 13px;">Account Name: {{resp.accountNumber | titlecase}}</p>
+                  <p style="margin-left: 13px;"> Account Type: {{resp.accountNumber}}</p>
+                  <p style="margin-left: 13px;">Account Number: {{resp.accountNumber }}</p>
+                </div> -->
+                <div accountDetails class="accDetails">
+                    <div *ngIf="!showDetails; else details">
+                      <!-- <p style="text-align: center; font-weight: 400">No details</p> -->
+                    </div>
+      
+                    <ng-template #details>
+                    <p style="margin-left: 13px;">Account Name: {{resp.accountNumber | titlecase}}</p>
+                    <p style="margin-left: 13px;"> Account Type: {{resp.accountNumber}}</p>
+                    <p style="margin-left: 13px;">Account Number: {{resp.accountNumber }}</p>
+                  
+                    </ng-template>
+                  </div>
+
+
+                <div class="step-div-labels">
+                    <div class="steppers">
+                        <div class="stepper-label" *ngFor="let label of labels; let i = index" role="listitem">
+                            <span class="dot" id="dot{{i}}"
+                                [ngClass]="{'active-dot': nav==i , 'dot-filled': nav > i}"></span>
+                            &nbsp;&nbsp;
+                            &nbsp;&nbsp;
+                            <span class="stepper-label-name"
+                                [ngClass]="{'stepper-label-name-active': nav==i}">{{label}}</span>
+                            <div *ngIf="i !== lastLabelIndex" class="line-breaker-stepper"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+          
+                <div class="accounts-data">
+                    <mat-divider></mat-divider>
+                    <div>
+                        <!-- <button *ngIf="userRole === 'VIRTUAL SCREENER'" (click)='();' class="reject-button"> Reject application </button>  -->
+                        <button (click)="approveApplication()"  class="btn approve"> Approve Application  </button>
+                        <button (click)="rejectApplication()"  class="btn reject"> Reject Application  </button> <br>
+                    </div>
+                    <div>
+                     </div>
+                </div>
+
+            </div>
+
+            <div fxFlex="80" fxFlex.md="80">
+                <div class="main-app">
+                    <p class="step-title">{{labels[nav]}}</p>
+
+                    <div class="forms-container" style="margin: 0">
+
+                        <div [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                            *ngIf="nav === 0 && isData">
+                           
+                           
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+                           
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> First Name </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="resp.clientProfile.firstName" name="employerName"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+            
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label">Surname</p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="resp.clientProfile.surname" name="Surname"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+            
+                            </div>
+            
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label">Other Names </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled  [(ngModel)]="resp.clientProfile.otherNames" name="otherNames"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                            
+                          <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                          fxLayout.sm="column" fxFlexFill>
+                         
+                          <div fxFlex="20" fxFlex.md="20">
+                            <p class="form-label"> Place Of Birth </p>
+                            <mat-form-field appearance="outline" class="form-fields">
+                              <input disabled [(ngModel)]="resp.clientProfile.placeOfBirth" name="placeOfBirth"
+                                class="input-forms" matInput type="text">
+                              <mat-error>
+                                <mat-icon>error</mat-icon> &nbsp;Required
+                              </mat-error>
+                            </mat-form-field>
+          
+                          </div>
+          
+                        
+          
+                          <div fxFlex="20" fxFlex.md="20">
+                            <p class="form-label"> Mothers Maiden Name </p>
+                            <mat-form-field appearance="outline" class="form-fields">
+                              <input disabled  [(ngModel)]="resp.clientProfile.mothersMaidenName" name="motherName"
+                                class="input-forms" matInput type="text">
+                              <mat-error>
+                                <mat-icon>error</mat-icon> &nbsp;Required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+
+
+                        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                        fxLayout.sm="column" fxFlexFill>
+                       
+                        <div fxFlex="20" fxFlex.md="20">
+                          <p class="form-label"> Residential Address </p>
+                          <mat-form-field appearance="outline" class="form-fields">
+                            <input disabled [(ngModel)]="resp.clientProfile.residentialAddress" name="residentialAddress"
+                              class="input-forms" matInput type="text">
+                            <mat-error>
+                              <mat-icon>error</mat-icon> &nbsp;Required
+                            </mat-error>
+                          </mat-form-field>
+        
+                        </div>
+        
+                      
+        
+                        <div fxFlex="20" fxFlex.md="20">
+                          <p class="form-label"> Digital Address  </p>
+                          <mat-form-field appearance="outline" class="form-fields">
+                            <input disabled  [(ngModel)]="resp.clientProfile.gpsCode" name="income"
+                              class="input-forms" matInput type="text">
+                            <mat-error>
+                              <mat-icon>error</mat-icon> &nbsp;Required
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+
+                          
+                      <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                      fxLayout.sm="column" fxFlexFill>
+                     
+                      <div fxFlex="20" fxFlex.md="20">
+                        <p class="form-label"> Primary MobileNumber </p>
+                        <mat-form-field appearance="outline" class="form-fields">
+                          <input disabled [(ngModel)]="resp.clientProfile.primaryMobileNumber" name="primaryMobileNumber"
+                            class="input-forms" matInput type="text">
+                          <mat-error>
+                            <mat-icon>error</mat-icon> &nbsp;Required
+                          </mat-error>
+                        </mat-form-field>
+      
+                      </div>
+      
+                      <div fxFlex="20" fxFlex.md="20">
+                        <p class="form-label">Secondary Mobile Number</p>
+                        <mat-form-field appearance="outline" class="form-fields">
+                          <input disabled [(ngModel)]="resp.clientProfile.secondaryMobileNumber" name="secondaryMobileNumber"
+                            class="input-forms" matInput type="text">
+                          <mat-error>
+                            <mat-icon>error</mat-icon> &nbsp;Required
+                          </mat-error>
+                        </mat-form-field>
+      
+                      </div>
+      
+                      <div fxFlex="20" fxFlex.md="20">
+                        <p class="form-label">Email </p>
+                        <mat-form-field appearance="outline" class="form-fields">
+                          <input disabled  [(ngModel)]="resp.clientProfile.email" name="email"
+                            class="input-forms" matInput type="text">
+                          <mat-error>
+                            <mat-icon>error</mat-icon> &nbsp;Required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                      
+                        
+                    <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                    fxLayout.sm="column" fxFlexFill>
+                   
+                    <div fxFlex="20" fxFlex.md="20">
+                      <p class="form-label"> id Number </p>
+                      <mat-form-field appearance="outline" class="form-fields">
+                        <input disabled [(ngModel)]="resp.clientProfile.idNumber" name="idNumber"
+                          class="input-forms" matInput type="text">
+                        <mat-error>
+                          <mat-icon>error</mat-icon> &nbsp;Required
+                        </mat-error>
+                      </mat-form-field>
+    
+                    </div>
+    
+                    <div fxFlex="20" fxFlex.md="20">
+                      <p class="form-label">Issue Date</p>
+                      <mat-form-field appearance="outline" class="form-fields">
+                        
+                        <!-- <input [readonly]="isReadonly" [ngModel]="resp.customerInfo.dob  | date : 'mediumDate'" (ngModelChange)="resp.customerInfo.dob =$event" name="dob" class="input-forms"  matInput type="text">  -->
+                    
+                        <input disabled [ngModel]="resp.clientProfile.issueDate | date : 'mediumDate'" (ngModelChange)="resp.clientProfile.issueDate =$event" name="occupation" class="input-forms" matInput type="text">
+
+                        <mat-error>
+
+                          <mat-icon>error</mat-icon> &nbsp;Required
+                        </mat-error>
+                      </mat-form-field>
+    
+                    </div>
+    
+                    <div fxFlex="20" fxFlex.md="20">
+                      <p class="form-label">Expiry Date </p>
+                      <mat-form-field appearance="outline" class="form-fields">
+                        <!-- <input disabled  [(ngModel)]="resp.clientProfile.expiryDate" name="expiryDate" class="input-forms" matInput type="text"> -->
+                        <input disabled [ngModel]="resp.clientProfile.expiryDate | date : 'mediumDate'" (ngModelChange)="resp.clientProfile.expiryDate =$event" name="occupation" class="input-forms" matInput type="text">
+
+                        <mat-error>
+                          <mat-icon>error</mat-icon> &nbsp;Required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+
+                  <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                  fxLayout.sm="column" fxFlexFill>
+                 
+                  <div fxFlex="20" fxFlex.md="20">
+                    <p class="form-label"> Residential Status </p>
+                    <mat-form-field appearance="outline" class="form-fields">
+                      <input disabled [(ngModel)]="resp.clientProfile.residentialStatus" name="ResidentialStatus"
+                        class="input-forms" matInput type="text">
+                      <mat-error>
+                        <mat-icon>error</mat-icon> &nbsp;Required
+                      </mat-error>
+                    </mat-form-field>
+  
+                  </div>
+  
+                  <div fxFlex="20" fxFlex.md="20">
+                    <p class="form-label"> Country Of Origin</p>
+                    <mat-form-field appearance="outline" class="form-fields">
+                      <input disabled [(ngModel)]="resp.clientProfile.countryOfOrigin" name="countryOfOrigin"
+                        class="input-forms" matInput type="text">
+                      <mat-error>
+                        <mat-icon>error</mat-icon> &nbsp;Required
+                      </mat-error>
+                    </mat-form-field>
+  
+                  </div>
+  
+                  <div fxFlex="20" fxFlex.md="20">
+                    <p class="form-label"> Country Of Residence </p>
+                    <mat-form-field appearance="outline" class="form-fields">
+                      <input disabled  [(ngModel)]="resp.clientProfile.countryOfResidence" name="income"
+                        class="input-forms" matInput type="text">
+                      <mat-error>
+                        <mat-icon>error</mat-icon> &nbsp;Required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                      
+                
+                <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                fxLayout.sm="column" fxFlexFill>
+               
+                <div fxFlex="20" fxFlex.md="20">
+                  <p class="form-label"> Profession </p>
+                  <mat-form-field appearance="outline" class="form-fields">
+                    <input disabled [(ngModel)]="resp.clientProfile.profession" name="profession"
+                      class="input-forms" matInput type="text">
+                    <mat-error>
+                      <mat-icon>error</mat-icon> &nbsp;Required
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>
+
+                <div fxFlex="20" fxFlex.md="20">
+                  <p class="form-label">Employment Status</p>
+                  <mat-form-field appearance="outline" class="form-fields">
+                    <input disabled [(ngModel)]="resp.clientProfile.employmentStatus" name="employmentStatus"
+                      class="input-forms" matInput type="text">
+                    <mat-error>
+                      <mat-icon>error</mat-icon> &nbsp;Required
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>  
+              </div>
+
+
+              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                fxLayout.sm="column" fxFlexFill>
+               
+                <div fxFlex="20" fxFlex.md="20">
+                  <p class="form-label"> Industry </p>
+                  <mat-form-field appearance="outline" class="form-fields">
+                    <input disabled [(ngModel)]="resp.clientProfile.industry" name="employerName"
+                      class="input-forms" matInput type="text">
+                    <mat-error>
+                      <mat-icon>error</mat-icon> &nbsp;Required
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>
+
+      
+
+              
+              </div>
+
+
+              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+              fxLayout.sm="column" fxFlexFill>
+             
+              <div fxFlex="20" fxFlex.md="20">
+                <p class="form-label"> Years Of Employment </p>
+                <mat-form-field appearance="outline" class="form-fields">
+                  <input disabled [(ngModel)]="resp.clientProfile.yearsOfEmployment" name="yearsOfEmployment"
+                    class="input-forms" matInput type="text">
+                  <mat-error>
+                    <mat-icon>error</mat-icon> &nbsp;Required
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+
+              <div fxFlex="20" fxFlex.md="20">
+                <p class="form-label">Years Of Current Employment </p>
+                <mat-form-field appearance="outline" class="form-fields">
+                  <input disabled [(ngModel)]="resp.clientProfile.yearsOfCurrentEmp" name="yearsOfCurrentEmp"
+                    class="input-forms" matInput type="text">
+                  <mat-error>
+                    <mat-icon>error</mat-icon> &nbsp;Required
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+
+
+              <div fxFlex="20" fxFlex.md="20">
+                <p class="form-label"> Years Of Previous Employment </p>
+                <mat-form-field appearance="outline" class="form-fields">
+                  <input disabled [(ngModel)]="resp.clientProfile.yearsOfPreviousEmp" name="yearsOfPreviousEmp"
+                    class="input-forms" matInput type="text">
+                  <mat-error>
+                    <mat-icon>error</mat-icon> &nbsp;Required
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+            
+            </div>
+
+
+            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+            fxLayout.sm="column" fxFlexFill>
+           
+            <div fxFlex="20" fxFlex.md="20">
+              <p class="form-label"> Employer Name </p>
+              <mat-form-field appearance="outline" class="form-fields">
+                <input  disabled [(ngModel)]="resp.clientProfile.employerName" name="employerName"
+                  class="input-forms" matInput type="text">
+                <mat-error>
+                  <mat-icon>error</mat-icon> &nbsp;Required
+                </mat-error>
+              </mat-form-field>
+
+            </div>
+
+            <div fxFlex="20" fxFlex.md="20">
+              <p class="form-label">Employer Address</p>
+              <mat-form-field appearance="outline" class="form-fields">
+                <input disabled [(ngModel)]="resp.clientProfile.employerAddress" name="employerAddress"
+                  class="input-forms" matInput type="text">
+                <mat-error>
+                  <mat-icon>error</mat-icon> &nbsp;Required
+                </mat-error>
+              </mat-form-field>
+
+            </div> 
+            
+          </div>
+
+
+          <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+          fxLayout.sm="column" fxFlexFill>
+         
+          <div fxFlex="20" fxFlex.md="20">
+            <p class="form-label"> Employer Contanct </p>
+            <mat-form-field appearance="outline" class="form-fields">
+              <input disabled [(ngModel)]="resp.clientProfile.employerContact" name="employerContanct"
+                class="input-forms" matInput type="text">
+              <mat-error>
+                <mat-icon>error</mat-icon> &nbsp;Required
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+
+          <div fxFlex="20" fxFlex.md="20">
+            <p class="form-label">Employer Email</p>
+            <mat-form-field appearance="outline" class="form-fields">
+              <input disabled [(ngModel)]="resp.clientProfile.employerEmail" name="employerEmail"
+                class="input-forms" matInput type="text">
+              <mat-error>
+                <mat-icon>error</mat-icon> &nbsp;Required
+              </mat-error>
+            </mat-form-field>
+
+          </div> 
+          
+        </div>
+
+        
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+        fxLayout.sm="column" fxFlexFill>
+       
+        <div fxFlex="20" fxFlex.md="20">
+          <p class="form-label"> Employer City </p>
+          <mat-form-field appearance="outline" class="form-fields">
+            <input disabled [(ngModel)]="resp.clientProfile.employerCity" name="employerCity"
+              class="input-forms" matInput type="text">
+            <mat-error>
+              <mat-icon>error</mat-icon> &nbsp;Required
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div fxFlex="20" fxFlex.md="20">
+          <p class="form-label">Nature Of Business</p>
+          <mat-form-field appearance="outline" class="form-fields">
+            <input disabled [(ngModel)]="resp.clientProfile.natureOfBusiness" name="natureOfBusiness"
+              class="input-forms" matInput type="text">
+            <mat-error>
+              <mat-icon>error</mat-icon> &nbsp;Required
+            </mat-error>
+          </mat-form-field>
+
+        </div> 
+        
+      </div>
+                          
+                 
+                        </div>
+
+                        <div class="" [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                            *ngIf="nav === 1 && isData">
+
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+                           
+            
+                      
+            
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Account Type </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled  [(ngModel)]="resp.accountType" name="income"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+
+                        </div>
+
+                        <div class="" style=""
+                            [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                            *ngIf="nav === 2 && isData">
+
+
+                            <div  *ngFor="let payment of resp.paymentDetails.bankAccounts; let i = index">
+                        
+                              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+
+                            <div>
+                              <p  class="numbering" style="margin-top: 4em"> {{i +1}}. </p>
+                            </div>
+                           
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Bank Name </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="payment.bankName" name="employerName"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+              
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Branch </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="payment.branch" name="branch"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+              
+              
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label">Bank Account Number </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="payment.bankAccountNumber" name="occupation"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+
+
+
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Account Name </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="payment.accountName" name="occupation"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                          </div>                          
+                        </div>
+
+                       
+
+
+                        <div *ngFor="let mobileWallet of resp.paymentDetails.mobileMoneyWallets; let i =index ">
+                            <!-- <h3> Payment Details  </h3> -->
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+
+                
+                            <div>
+                              <p  class="numbering" style="margin-top: 4em"> {{i +1}}. </p>
+                            </div>
+
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Service Provider </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="mobileWallet.serviceProvider" name="employerName"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+              
+                            </div>
+              
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Momo Number </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="mobileWallet.momoNumber" name="occupation"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+              
+                            </div>
+              
+              
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Name on Waller </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="mobileWallet.nameOnWallet" name="occupation"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+              
+                            </div>
+                          
+                          </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                        <div class="" 
+                            [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                            *ngIf="nav === 3 && isData">
+
+                            <div *ngFor="let beneficary of resp.beneficiaries; let i = index">
+                                <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                                fxLayout.sm="column" fxFlexFill>
+
+                                <div>
+                                <p  class="numbering" style="margin-top: 4em"> {{i +1}}. </p>
+                                </div>
+                               
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Full Name </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="beneficary.fullName" name="employerName"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                  
+                                </div>
+                  
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Relationship </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="beneficary.relationship" name="occupation"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                  
+                                </div>
+                  
+                  
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Contact Number </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="beneficary.contactNumber" name="occupation"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                  
+                                </div>
+
+
+                                <div fxFlex="20" fxFlex.md="20">
+                                    <p class="form-label"> Percentage </p>
+                                    <mat-form-field appearance="outline" class="form-fields">
+                                      <input disabled [(ngModel)]="beneficary.percentage" name="occupation"
+                                        class="input-forms" matInput type="text">
+                                      <mat-error>
+                                        <mat-icon>error</mat-icon> &nbsp;Required
+                                      </mat-error>
+                                    </mat-form-field>
+                    
+                                  </div>
+                              
+                              </div>
+    
+    
+                            </div>
+    
+    
+                           
+                        </div>
+
+                        <div class="" 
+                            [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                            *ngIf="nav === 4 && isData">
+                            
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+                                fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+             
+                                
+                               
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Risk Tolerance </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="resp.investProfile.riskTolerance" name="employerName"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                
+                                </div>
+                
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Investment Horizon</p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="resp.investProfile.investmentHorizon" name="occupation"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                
+                                </div>
+                
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Investment Knowledge </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled  [(ngModel)]="resp.investProfile.investmentKnowledge" name="income"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="" 
+                        [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                        *ngIf="nav === 5 && isData">
+                        
+                        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+                            fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+         
+                            
+                           
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Source Of Funds </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="resp.expAcctActActivity.sourceOfFunds" name="employerName"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+            
+                            </div>
+            
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Top up Activity</p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled [(ngModel)]="resp.expAcctActActivity.topupActivity" name="occupation"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+            
+                            </div>
+            
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Withdrawal Activity </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled  [(ngModel)]="resp.expAcctActActivity.withdrawalActivity" name="income"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+
+                            <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Anticipated Top upAmount </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled  [(ngModel)]="resp.expAcctActActivity.anticipatedTopupAmount" name="income"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div>
+
+                        </div>
+
+
+                        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+                        fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+                        <div fxFlex="20" fxFlex.md="20">
+                            <p class="form-label"> Initial Investment Amount </p>
+                            <mat-form-field appearance="outline" class="form-fields">
+                              <input disabled  [(ngModel)]="resp.expAcctActActivity.initialInvestmentAmount" name="income"
+                                class="input-forms" matInput type="text">
+                              <mat-error>
+                                <mat-icon>error</mat-icon> &nbsp;Required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+
+                        </div>
+
+
+                        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+                        fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+                        <div fxFlex="20" fxFlex.md="20">
+                          <p class="form-label"> Mode of Payment </p>
+
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.cash"> Cash </mat-checkbox></p>
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.cheque"> Cheque </mat-checkbox></p>
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.directDebit"> Direct Debit </mat-checkbox></p>
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.directTransfer"> Direct Transfer </mat-checkbox></p>
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.mobileMoney">  Mobile Money </mat-checkbox></p>
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.slydePay"> Slydepay </mat-checkbox></p>
+                           <p><mat-checkbox disabled [checked]="resp.expAcctActActivity.standingOrder"> Standing Order </mat-checkbox></p>
+                          </div>
+                        </div> 
+                    </div>
+
+
+                    <div class="" 
+                    [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                    *ngIf="nav === 6 && isData">
+                    
+                    <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+                        fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+     
+
+                        <div fxFlex="100" fxFlex.md="100" class="dL-flex">
+                      
+                          <div class="selection">
+                            <mat-label for=""> Are you a citizen of any foreign country (besides Ghana)?  </mat-label>
+                            <div class="radio-group">
+                              <mat-radio-group disabled  [(ngModel)]="resp.additionalInfo.foreignCitizen">
+                                <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                                <mat-radio-button [value]="false"> No  </mat-radio-button>
+                              </mat-radio-group>
+
+                              <div *ngIf="resp.additionalInfo.foreignCitizen == true; else empty">
+
+                                <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                                fxLayout.sm="column" fxFlexFill>
+                               
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Foreign Residential Address </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [value]="resp.additionalInfo.foreignGreenCardData.foreignResidentialAddr || 'N/A'" name="employerCity"  class="input-forms" matInput type="text">
+                                      <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                        
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label">  Foreign Mailing Address </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="resp.additionalInfo.foreignCitizenData.foreignMailingAddr" name="natureOfBusiness"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div> 
+  
+  
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Foreign Telephone Number </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="resp.additionalInfo.foreignCitizenData.foreignTelephoneNumber" name="natureOfBusiness"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div> 
+                                
+                              </div>
+  
+  
+                              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                              fxLayout.sm="column" fxFlexFill>
+  
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Tin </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled  [(ngModel)]="resp.additionalInfo.foreignCitizenData.tin" name="tin"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div>
+                              </div>                             
+                             </div>
+                            </div>
+                          </div> 
+        
+                       
+                          <div class="form-group">
+                            <mat-label for=""> Do you hold a passport of any foreign country (besides Ghana)?  </mat-label>
+                            <div class="radio-group">
+                              <!-- foreignPassport -->
+                              <mat-radio-group disabled [(ngModel)]="resp.additionalInfo.foreignPassport">
+                                <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                                <mat-radio-button [value]="false"> No  </mat-radio-button>
+                              </mat-radio-group>
+
+                              <div *ngIf="resp.additionalInfo.foreignPassport == true; else empty">
+
+                                <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                                fxLayout.sm="column" fxFlexFill>
+                               
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Foreign Residential Address </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [value]="resp.additionalInfo.foreignPassportData.foreignResidentialAddr || 'N/A'" name="employerCity"  class="input-forms" matInput type="text">
+                                      <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                        
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label">  Foreign Mailing Address </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="resp.additionalInfo.foreignPassportData.foreignMailingAddr" name="natureOfBusiness"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div> 
+  
+  
+                                <div fxFlex="20" fxFlex.md="20">
+                                  <p class="form-label"> Foreign Telephone Number </p>
+                                  <mat-form-field appearance="outline" class="form-fields">
+                                    <input disabled [(ngModel)]="resp.additionalInfo.foreignPassportData.foreignTelephoneNumber" name="natureOfBusiness"
+                                      class="input-forms" matInput type="text">
+                                    <mat-error>
+                                      <mat-icon>error</mat-icon> &nbsp;Required
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div> 
+                                
+                              </div>
+  
+  
+                              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                              fxLayout.sm="column" fxFlexFill>
+  
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Tin </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled  [(ngModel)]="resp.additionalInfo.foreignPassportData.tin" name="tin"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div>
+                              </div>                             
+                             </div>
+
+
+                            </div>
+                        </div>
+        
+                        <div class="form-group">
+                          <mat-label for=""> Do you hold a green card of any foreign country (besides Ghana)?  </mat-label>
+                          <div class="radio-group">
+                            <mat-radio-group disabled [(ngModel)]="resp.additionalInfo.foreignGreenCard">
+                              <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                              <mat-radio-button [value]="false"> No  </mat-radio-button>
+                            </mat-radio-group>
+
+                            <div *ngIf="resp.additionalInfo.foreignGreenCard === true">
+
+                              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                              fxLayout.sm="column" fxFlexFill>
+                             
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Foreign Residential Address </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [value]="resp.additionalInfo.foreignGreenCardData.foreignResidentialAddr || 'N/A'" name="employerCity"  class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div>
+                      
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label">  Foreign Mailing Address </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [(ngModel)]="resp.additionalInfo.foreignGreenCardData.foreignMailingAddr" name="natureOfBusiness"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div> 
+
+
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Foreign Telephone Number </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [(ngModel)]="resp.additionalInfo.foreignGreenCardData.foreignTelephoneNumber" name="natureOfBusiness"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div> 
+                              
+                            </div>
+
+
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Tin </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled  [(ngModel)]="resp.additionalInfo.foreignGreenCardData.tin" name="employerCity"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            </div>                             
+                           </div>
+
+                          </div>
+                        </div>  
+
+
+                        <div class="form-group">
+                          <mat-label for="">  Are you resident in any foreign country?  </mat-label>
+                          <div class="radio-group">
+                            <mat-radio-group disabled [(ngModel)]="resp.additionalInfo.foreignResident">
+                              <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                              <mat-radio-button [value]="false"> No  </mat-radio-button>
+                            </mat-radio-group>
+
+
+                            <div *ngIf="resp.additionalInfo.foreignResident === true">
+
+                              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                              fxLayout.sm="column" fxFlexFill>
+                             
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Foreign Residential Address </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [value]="resp.additionalInfo.foreignResidentData.foreignResidentialAddr || 'N/A'" name="employerCity"  class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div>
+                      
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label">  Foreign Mailing Address </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [(ngModel)]="resp.additionalInfo.foreignResidentData.foreignMailingAddr" name="natureOfBusiness"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div> 
+
+
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Foreign Telephone Number </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [(ngModel)]="resp.additionalInfo.foreignResidentData.foreignTelephoneNumber" name="natureOfBusiness"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div> 
+                              
+                            </div>
+
+
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Tin </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled  [(ngModel)]="resp.additionalInfo.foreignResidentData.tin" name="employerCity"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            </div>                             
+                           </div>
+
+                          </div>
+                        </div>  
+                        
+
+                        <div class="form-group">
+                          <mat-label for=""> Have you spent more than 183 days in any foreign country?  </mat-label>
+                          <div class="radio-group">
+                            <mat-radio-group disabled [(ngModel)]="resp.additionalInfo.moreDaysInForeignCountry">
+                              <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                              <mat-radio-button [value]="false"> No  </mat-radio-button>
+                            </mat-radio-group>
+                           
+                            <div *ngIf="resp.additionalInfo.moreDaysInForeignCountry === true">
+
+                              <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                              fxLayout.sm="column" fxFlexFill>
+                             
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Foreign Residential Address </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [value]="resp.additionalInfo.moreDaysData.foreignResidentialAddr || 'N/A'" name="employerCity"  class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div>
+                      
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label">  Foreign Mailing Address </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [(ngModel)]="resp.additionalInfo.moreDaysData.foreignMailingAddr" name="natureOfBusiness"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div> 
+
+
+                              <div fxFlex="20" fxFlex.md="20">
+                                <p class="form-label"> Foreign Telephone Number </p>
+                                <mat-form-field appearance="outline" class="form-fields">
+                                  <input disabled [(ngModel)]="resp.additionalInfo.moreDaysData.foreignTelephoneNumber" name="natureOfBusiness"
+                                    class="input-forms" matInput type="text">
+                                  <mat-error>
+                                    <mat-icon>error</mat-icon> &nbsp;Required
+                                  </mat-error>
+                                </mat-form-field>
+                              </div> 
+                              
+                            </div>
+
+
+                            <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                            fxLayout.sm="column" fxFlexFill>
+
+                            <div fxFlex="20" fxFlex.md="20">
+                              <p class="form-label"> Tin </p>
+                              <mat-form-field appearance="outline" class="form-fields">
+                                <input disabled  [(ngModel)]="resp.additionalInfo.moreDaysData.tin" name="employerCity"
+                                  class="input-forms" matInput type="text">
+                                <mat-error>
+                                  <mat-icon>error</mat-icon> &nbsp;Required
+                                </mat-error>
+                              </mat-form-field>
+                            </div>
+                            </div>                             
+                           </div>
+
+                          </div>
+                        </div> 
+
+
+                        <div class="form-group">
+                          <mat-label>  Do you require access to your SIMS account online </mat-label>
+                          <div class="radio-group">
+                            <mat-radio-group disabled [(ngModel)]="resp.additionalInfo.foreignGreenCard">
+                              <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                              <mat-radio-button [value]="false"> No  </mat-radio-button>
+                            </mat-radio-group>
+                          </div>
+                        </div>
+
+
+                        <div class="form-group">
+                          <mat-label> Have you bought a security as a treasury bill bond, shares etc </mat-label>
+                          <div class="radio-group">
+                            <mat-radio-group disabled  [(ngModel)]="resp.additionalInfo.securityPurchase">
+                              <mat-radio-button [value]="true"> Yes  </mat-radio-button>
+                              <mat-radio-button [value]="false"> No  </mat-radio-button>
+                            </mat-radio-group>
+                          </div>   
+                        </div>
+
+
+                        <div fxFlex="30" fxFlex.md="30">
+                          <div class="form-group">
+                            <div>
+                            <mat-label> Email for Email indemnity </mat-label>
+                            <br>
+                            <br>
+                            <mat-form-field appearance="outline">
+                              <input disabled [(ngModel)]="resp.additionalInfo.indemnityEmail" name="employerName"
+                                class="input-forms" matInput type="text">
+                              <mat-error>
+                                <mat-icon>error</mat-icon> &nbsp;Required
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                </div>
+
+
+
+                <div class="" 
+                [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                *ngIf="nav === 7 && isData">
+              
+                <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+                    fxLayout.md="row" fxLayout.sm="column" fxFlexFill>
+ 
+                    <div class="style-wrapper">              
+                    <div class="form-group">
+                      <p>
+                        Communicate other companies’ products, services, and special offers to
+                        me. If I respond positively to the communication, that company may
+                        contact me.
+                      </p>
+                      <div class="radio-group">
+                        <mat-radio-group disabled  [(ngModel)]="resp.consent.otherProducts">
+                        <mat-radio-button [value]="true"> Yes </mat-radio-button>
+                        <mat-radio-button [value]="false"> No </mat-radio-button>
+                      </mat-radio-group>
+
+                 
+
+                      </div>
+                    </div>
+                
+                    
+                
+                    <div class="form-group">
+                      <p>
+                        Contact me for research purposes. (The research companies we use follow
+                        strict codes of conduct and treat customer information confidentially).
+                      
+                      </p>
+                      <div class="radio-group">
+                        <mat-radio-group disabled  [(ngModel)]="resp.consent.research">
+                          <mat-radio-button [value]="true"> Yes </mat-radio-button>
+                          <mat-radio-button [value]="false"> No </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                     <p>
+                      Inform me of products, services and special offers.
+                     </p>
+                      <div class="radio-group">
+                        <mat-radio-group  disabled [(ngModel)]="resp.consent.offers">
+                          <mat-radio-button [value]="true"> Yes </mat-radio-button>
+                          <mat-radio-button [value]="false"> No </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                   
+                    </div>
+                
+                    <div class="form-group">
+                      <p>
+                        Share my personal information within the Group for marketing purposes
+                        and that the Group may then market its products, services and special
+                        offers to me.
+                      </p>
+                      <div class="radio-group">
+                        <mat-radio-group disabled  [(ngModel)]="resp.consent.sharePersonalInfo">
+                          <mat-radio-button [value]="true"> Yes </mat-radio-button>
+                          <mat-radio-button [value]="false"> No </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>    
+                </div>
+
+                </div>
+
+
+               
+                <div class=""  style=""
+                [ngClass]="{'slideInLeft': status==='next' , 'slideInRight': status === 'back'}"
+                *ngIf="nav === 8 && isData">
+              
+               
+           
+                    <div class="content" fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayout.md="row"
+                    fxLayout.sm="column" fxFlexFill>
+                
+                   
+                      
+                    <div fxFlex="50" fxFlex.md="50">
+
+                      <div class="form-group" *ngIf="resp?.files?.length > 0; else noFile">
+                      <div  width="100%" >
+                        <table *ngFor="let link of resp?.files" width="100%">
+                          <p> {{link?.fileType | titlecase }} </p>
+
+                          <td class="document-list-items" width="100%">
+                            
+                            <a class="document-list-items" [href]="link?.fileName"  target="_blank">
+                             File Upload (click to preview)
+                            </a>
+                          
+                          </td>
+                          <td>
+                            <mat-icon class="document-check">check_circle</mat-icon>
+                          </td>
+                        </table>
+                      </div>
+
+                      
+                      </div>
+
+                    </div>
+                 
+                
+
+                    
+                 
+                  </div>
+                </div>
+                <div>           
+                </div>
+                <div class="bottom-buttons">
+                    <button *ngIf="nav > 0" (click)="back()" mat-button class="toolbar-text">
+                        <mat-icon class="" aria-hidden="true">keyboard_arrow_left</mat-icon>
+                        Back
+                    </button>
+
+                    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+                      <button *ngIf="nav !== lastLabelIndex" mat-raised-button class="continue-btn" class="continue-btn" (click)="next()">CONTINUE </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    
+
+
+</div>
+
+
+
+<ng-template #empty>
+  <p> Nothing here </p>
+</ng-template>
+
+
+<ng-template #noFile>
+  <p> No Document uploaded </p>
+</ng-template>

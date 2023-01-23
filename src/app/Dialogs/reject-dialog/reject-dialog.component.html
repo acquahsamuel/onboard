@@ -1,0 +1,62 @@
+<div fxLayout="row" fxLayoutAlign="center" style="margin-bottom: 10px">
+  <h4
+    style="
+      margin: 0px;
+      color: #2d71b5;
+      font-size: 17px;
+      font-weight: 400 !important;
+    "
+  >
+    Reject Application
+  </h4>
+  <mat-icon (click)="onNoClick()" style="margin-left: auto; cursor: pointer"
+    >close</mat-icon
+  >
+</div>
+<br />
+
+<form class="form-dialogue-reject" [formGroup]="rejectionForm">
+ <div>
+  <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label> Reject Reasons </mat-label>
+        <mat-select [disabled]="reasonsList===[]" formControlName="reason">
+          <mat-option *ngFor="let reason of reasonsList" [value]="reason.description">
+            {{reason.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+
+  <p class="form-label">Comments</p>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <textarea
+      matInput
+      maxlength="90"
+      type="text"
+      placeholder="Comment Notes...."
+      name="comment"
+      formControlName="comments"
+    ></textarea>
+  </mat-form-field>
+  </div>
+</form>
+
+<div fxLayout="row" fxLayoutAlign="center">
+  <button
+    (click)="onNoClick()"
+    mat-button
+    style="color: #8d9290; margin-left: 33%"
+  >
+    CANCEL
+  </button>
+  <!-- <button
+    [mat-dialog-close]="{ comment: comment.value, reason : reason.value }"
+    mat-button
+    style="color: 'red'"
+  >
+    CONFIRM
+  </button> -->
+  <button  mat-button style="color: 'red'" (click)="submit()" *ngIf="!this.rejectionForm.invalid" > Submit </button>
+</div>
+

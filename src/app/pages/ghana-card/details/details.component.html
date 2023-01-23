@@ -1,0 +1,236 @@
+<div class="everything">
+  <app-header></app-header>
+
+  <div style="height: 100%">
+    <div fxFlex="100" fxFlex.md="100">
+      <mat-toolbar>
+        <div class="toolbar-content">
+          <button routerLink="/ghana-card" mat-button class="toolbar-text">
+            <mat-icon class="toolbar-icon" aria-hidden="true">keyboard_arrow_left</mat-icon>
+            Dashboard
+          </button>
+        </div>
+      </mat-toolbar>
+
+      <mat-drawer-container fxFlexFill autosize style="padding-bottom: 8%; background-color: #ffffff">
+        <mat-drawer id="sidenav" mode="side" [class.menu-open]="sideBarOpen" [class.menu-close]="!sideBarOpen" [opened]="sideBarOpen">
+          <app-request-sidebar>
+            <div accountDetails class="accDetails">
+              <div *ngIf="this.stage == 0 || !this.clientData; else details">
+                <p style="text-align: center">No details to display</p>
+              </div>
+              <ng-template #details>
+                <p style="margin-left: 13px">
+                  <!-- Branch: {{ clientData. | titlecase }} -->
+                </p>
+                <p style="margin-left: 13px">
+                  Status: {{ clientData?.status | titlecase }}
+                </p>
+                <p style="margin-left: 13px">
+                  SIMS Id: {{ clientData?.acc ?? 'N/A' }}
+                </p>
+                <p style="margin-left: 13px">
+                  Modified Date:
+                  {{ clientData?.requestDate | date: "dd MMM yyyy" }}
+                </p>
+              </ng-template>
+            </div>
+          </app-request-sidebar>
+        </mat-drawer>
+        <mat-drawer-content style="
+            background-color: #ffffff;
+            overflow: auto;
+            height: 100%;
+            overflow-x: hidden;
+          ">
+          <div *ngIf="isData" class="step">
+            <p class="step-title">Client Information</p>
+          </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <div *ngIf="isData" class="main-view">
+            <br />
+            <p class="form-label" *ngIf="search">CIF ID</p>
+            <!-- <div *ngIf="search" fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" fxLayout.md="row" fxLayout.sm="column">
+              <div fxLayout="row" fxFlex="35">
+                <mat-form-field class="form-fields" appearance="outline">
+                  <input autofocus (keyup.enter)="getClientDetails()" matInput placeholder=" Search" type="text" [(ngModel)]="cifNumber" />
+                  <mat-icon matPrefix>search</mat-icon>
+                  
+                </mat-form-field>
+                <button (click)="getClientDetails()" mat-button style="
+                    background-color: #0089ff;
+                    color: white;
+                    height: 48.5px;
+                    margin-left: 10px;
+                    margin-top: 4px;
+                  ">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+            </div> -->
+            <br *ngIf="search" />
+            <br *ngIf="search" />
+            <div *ngIf="stage == 1" fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" fxLayout.md="row" fxLayout.sm="column">
+
+              <div fxFlex="30">
+                <p class="form-label">Full Name</p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="clientData?.fullname ?? '' | titlecase" disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+
+
+
+              <div>
+                <p class="form-label">
+                  Ghana Card ID Number <span style="color: red">*</span>
+                </p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="clientData?.cardNo" disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <p class="form-label">
+                  SIMS ID <span style="color: red">*</span>
+                </p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="clientData?.acc" disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+
+
+            </div>
+            <div *ngIf="stage == 1" fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" fxLayout.md="row" fxLayout.sm="column">
+
+              <div>
+                <p class="form-label">Postal address</p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                      clientData?.postalAddress
+                        ? clientData?.postalAddress
+                        : 'Not provided'
+                    " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+              <div>
+                <p class="form-label">Physical address</p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                      clientData?.physicalAddress
+                        ? clientData?.physicalAddress
+                        : 'Not provided'
+                    " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <p class="form-label">Email Address<span style="color: red">*</span></p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                                    clientData?.email
+                                      ? clientData?.email
+                                      : 'Not provided'
+                                  " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+
+              <div>
+                <p class="form-label">Transaction GUID<span style="color: red">*</span></p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                                    clientData?.transId
+                                      ? clientData?.transId
+                                      : 'Not provided'
+                                  " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+
+
+            </div>
+
+            <div *ngIf="stage == 1" fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column" fxLayout.md="row" fxLayout.sm="column">
+              <div>
+                <p class="form-label">Digital address</p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                    clientData?.digitalAddress
+                      ? clientData?.digitalAddress
+                      : 'Not provided'
+                  " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+              <div>
+                <p class="form-label">Phone Number<span style="color: red">*</span></p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                    clientData?.primaryPhone ? clientData?.primaryPhone : 'Not provided'
+                  " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+              <div>
+                <p class="form-label">Secondary Phone Number</p>
+                <mat-form-field class="select-form" appearance="outline">
+                  <input [value]="
+                      clientData?.secondaryPhone ? clientData?.secondaryPhone : 'Not provided'
+                    " disabled matInput type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngIf="stage == 1">
+              <p class="form-label" *ngIf="clientData?.frontImage">
+                Image/Document of ID Card
+              </p>
+              <br />
+
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                <div class="image-box">
+                  <a [href]="clientData?.frontImage" target="_blank">
+                    <img [src]="clientData?.frontImage" alt="GHANA CARD IMAGE" *ngIf="
+                        this.clientData?.frontImage
+                      " />
+                  </a>
+
+                </div>
+                <div class="image-box">
+                  <a [href]="clientData?.backImage" target="_blank">
+                    <img [src]="clientData?.backImage" alt="GHANA CARD IMAGE" *ngIf="
+                        this.clientData?.backImage
+                      " />
+                  </a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!isData && errorMessage">
+            <div class="no-data-container">
+              <mat-icon *ngIf="errorMessage">cancel</mat-icon>
+              <br />
+              {{ errorMessage }}
+            </div>
+          </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <!-- NAVIGATION -->
+          <div *ngIf="isData && stage == 1 && clientData?.status == 'PENDING'" class="bottom-buttons">
+            <div fxFlex fxLayout="row" fxLayoutAlign="flex-end" style="margin-right: 100px">
+              <button (click)="review()" mat-raised-button class="continue-btn">
+                REVIEW
+              </button>
+            </div>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  </div>
+</div>

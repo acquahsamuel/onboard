@@ -1,0 +1,58 @@
+<div fxLayout="row" fxLayoutAlign="center" style="margin-bottom: 10px; ">
+    <h4 style="margin: 0px; color:#2D71B5 ; font-weight: 600 !important;">Review</h4>
+    <mat-icon (click)="closeDialog()" style="margin-left:auto; cursor:pointer">close</mat-icon>
+</div>
+  <!-- <div >
+  <p class="form-label">Reason*</p>
+  <mat-form-field class="select-form" appearance="outline">
+      <mat-select placeholder="Select a reason" class="browser-default" [(ngModel)]="selectedStatus" required >
+        <mat-option value="Select" disabled selected>Select</mat-option>
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{ status.name |titlecase}}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        <mat-icon>error</mat-icon> &nbsp;Required
+      </mat-error>
+    </mat-form-field>
+</div>      -->
+
+<mat-form-field class="select-form" appearance="outline">
+  <input
+  #inputName='matInput'
+  placeholder="Enter a reason"
+    style="
+      position: absolute;
+      z-index: 100;
+      width: 200px;
+      background-color: white;
+    "
+    matInput
+    *ngIf="showOther"
+    [(ngModel)]="selectedReason"
+  />
+<mat-select
+placeholder="Select a reason"
+class="browser-default"
+[(ngModel)]="selectedReason"
+(ngModelChange)="showOtherHandler()"
+>
+<mat-option value="Select" disabled selected>Select</mat-option>
+<mat-option *ngFor="let reason of reasons" value="{{ reason }}" [matTooltip]="reason">
+  {{ reason }}
+</mat-option>
+<mat-option value="Other">Other</mat-option>
+</mat-select>
+<br/>
+</mat-form-field>
+
+
+<!-- <p class="form-label">Comments</p>                 
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <textarea  matInput maxlength="90" type="text" placeholder="Comment" [(ngModel)]="comment"></textarea>
+  </mat-form-field> -->
+
+<div fxLayout="row"  fxLayoutAlign="flex-end">
+    <button (click)="respond('REJECTED')" mat-button style="color: 'red' ">REJECT</button>
+    <button (click)="respond('APPROVED')" mat-button style="color: #22B573;">APPROVE</button>
+</div>
